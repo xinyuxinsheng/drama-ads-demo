@@ -10,25 +10,23 @@
   );
   document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
 
-  /* ===== ① 工作台：商品选择 + 剧方确认 + 步骤推进 ===== */
+  /* ===== ① 剧本开发：服装位候选选择 + 剧方确认 + 步骤推进 ===== */
   const confirmBtn = $('confirmBtn');
-  const mcards = document.querySelectorAll('.mcard');
-  let chosen = 'LEAPX 都市风衣';
   let confirmed = false;
 
-  mcards.forEach((card) => {
-    card.addEventListener('click', () => {
+  document.querySelectorAll('.cand').forEach((btn) => {
+    btn.addEventListener('click', () => {
       if (confirmed) return;
-      mcards.forEach((c) => c.classList.remove('sel'));
-      card.classList.add('sel');
-      chosen = card.dataset.name;
-      confirmBtn.textContent = '剧方确认植入：' + chosen;
+      document.querySelectorAll('.cand').forEach((b) => b.classList.remove('on'));
+      btn.classList.add('on');
     });
   });
 
   confirmBtn.addEventListener('click', () => {
+    if (confirmed) return;
     confirmed = true;
-    confirmBtn.textContent = '✓ 已确认植入 ' + chosen;
+    const wear = document.querySelector('.cand.on');
+    confirmBtn.textContent = '✓ 已确认整集植入方案（服装位：' + wear.dataset.pick + '）';
     confirmBtn.classList.add('done');
     $('stepMatch').classList.replace('act', 'done');
     $('stepConfirm').classList.add('done');
@@ -36,32 +34,39 @@
     $('genCard').classList.add('show');
   });
 
-  /* ===== ② 前后对比：同步播放 ===== */
-  const vidA = $('vidA'), vidB = $('vidB'), cmpPlay = $('cmpPlay');
-
-  cmpPlay.addEventListener('click', () => {
-    if (vidA.paused) {
-      vidB.currentTime = vidA.currentTime;
-      Promise.all([vidA.play(), vidB.play()]).catch(() => {});
-      cmpPlay.textContent = '⏸ 暂停对比';
-    } else {
-      vidA.pause(); vidB.pause();
-      cmpPlay.textContent = '▶ 同步播放对比';
-    }
-  });
-  // 轻量纠偏：防止两条视频播放漂移
+  /* ===== ② AI 成片：滚动进入视口即同步循环播放 ===== */
+  const rowIO = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        const vids = e.target.querySelectorAll('video');
+        if (e.isIntersecting) {
+          vids.forEach((v) => { v.currentTime = 0; v.play().catch(() => {}); });
+        } else {
+          vids.forEach((v) => v.pause());
+        }
+      });
+    },
+    { threshold: 0.35 }
+  );
+  document.querySelectorAll('.duo-row').forEach((row) => rowIO.observe(row));
+  // 轻量纠偏：同组两条视频防漂移
   setInterval(() => {
-    if (!vidA.paused && Math.abs(vidA.currentTime - vidB.currentTime) > 0.08) {
-      vidB.currentTime = vidA.currentTime;
-    }
+    document.querySelectorAll('.duo-row').forEach((row) => {
+      const [a, b] = row.querySelectorAll('video');
+      if (a && b && !a.paused && Math.abs(a.currentTime - b.currentTime) > 0.08) {
+        b.currentTime = a.currentTime;
+      }
+    });
   }, 800);
 
-  /* ===== ③ 观看页 ===== */
+  /* ===== ③ 投流变现 ===== */
   const vidP = $('vidP'), pPlay = $('pPlay');
   const ribbon = $('brandRibbon'), dmLayer = $('dmLayer'), pcard = $('pcard');
   const toast = $('toast'), countrySwitch = $('countrySwitch');
   let firedDm = new Set();
   let cardShown = false;
+
+  vidP.src = C.playerVideo;
 
   // 国家切换
   function applyCountry(code, silent) {
@@ -105,14 +110,11 @@
 
   vidP.addEventListener('timeupdate', () => {
     const t = vidP.currentTime;
-    // 片头冠名
     ribbon.classList.toggle('show', t >= C.badge.start && t <= C.badge.end);
-    // 弹幕
     C.danmaku.forEach((d, i) => {
       if (t >= d.t && !firedDm.has(i)) { firedDm.add(i); spawnDm(d); }
     });
-    // 商品卡
-    if (t >= C.garmentAt && !cardShown) { cardShown = true; pcard.classList.add('show'); }
+    if (t >= C.productAt && !cardShown) { cardShown = true; pcard.classList.add('show'); }
   });
 
   pPlay.addEventListener('click', () => {
