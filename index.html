@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>剧链 DramaLink · AI 时代的广告平台</title>
+<meta name="description" content="让每一帧 AI 生成内容都可植入、可追踪、可成交。AI 短剧是我们的第一站。">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<header class="nav">
+  <div class="nav-brand">剧链<span>DRAMALINK</span></div>
+  <nav class="nav-steps">
+    <a href="#s1">脚本期</a>
+    <a href="#s2">生成期</a>
+    <a href="#s3">变现期</a>
+  </nav>
+</header>
+
+<!-- ① 封面 -->
+<section id="s0" class="hero">
+  <p class="eyebrow reveal">INVESTOR DEMO · 2026</p>
+  <h1 class="reveal d1">AI 时代的<em>广告平台</em></h1>
+  <p class="hero-sub reveal d2">AI 正在重写内容生产。我们让每一帧 AI 生成的内容，都可植入、可追踪、可成交。<br>
+  <strong>AI 短剧</strong>——AI 生成内容中变现潜力最大的场景——是我们的第一站。</p>
+
+  <div class="stats reveal d3">
+    <div class="stat"><b>¥504.4<i>亿</i></b><span>中国微短剧市场规模<br>2024 年首次超过电影票房</span></div>
+    <div class="stat"><b>$29.8<i>亿</i></b><span>海外短剧 App 内购收入<br>2025 年，同比 +115%</span></div>
+    <div class="stat"><b>$32–68</b><span>虚拟植入 CPM 溢价<br>普通贴片仅 $18–35</span></div>
+  </div>
+
+  <div class="flow reveal d4">
+    <a href="#s1" class="flow-step"><i>01</i><b>脚本期</b><span>AI 植入规划 · 创作者确认</span></a>
+    <a href="#s2" class="flow-step"><i>02</i><b>生成期</b><span>无痕服装植入</span></a>
+    <a href="#s3" class="flow-step"><i>03</i><b>变现期</b><span>弹幕引导 · 全球自动转链</span></a>
+  </div>
+  <p class="src reveal d5">数据来源：中国网络视听协会白皮书 · Sensor Tower · The Drum</p>
+</section>
+
+<!-- ② 脚本期 · 植入工作台 -->
+<section id="s1" class="sec">
+  <header class="sec-head reveal">
+    <i>01 · 脚本期</i>
+    <h2>剧本还没开拍，广告位已经卖出去了</h2>
+    <p>AI 通读剧本，自动标注可植入位；品牌需求自动匹配；创作者一键确认——植入不再是事后硬塞，而是创作的一部分。</p>
+  </header>
+
+  <div class="wb reveal d1">
+    <div class="wb-script">
+      <div class="wb-script-head">《逆袭千金的巴黎行》 · 剧本 v3 · AI 植入分析完成</div>
+      <div class="scene">
+        <h4>场次 2 · 内景 · 女主公寓 · 清晨</h4>
+        <p>林晚从衣柜取出一件<mark data-spot="1">风衣<em>植入位 ①</em></mark>，对镜整理衣领，深吸一口气。</p>
+        <p class="line">林晚：「今天，是我夺回一切的第一天。」</p>
+      </div>
+      <div class="scene">
+        <h4>场次 5 · 外景 · 街头 · 日</h4>
+        <p>林晚快步穿过人流，<mark data-spot="2">运动鞋<em>植入位 ②</em></mark>特写，脚步坚定有力。</p>
+      </div>
+      <div class="scene">
+        <h4>场次 9 · 内景 · 晚宴 · 夜</h4>
+        <p>林晚身着<mark data-spot="3">晚礼服<em>植入位 ③</em></mark>缓步入场，全场安静了三秒。</p>
+      </div>
+    </div>
+
+    <div class="wb-brand">
+      <div class="wb-brand-head"><span class="logo-chip">LEAPX</span> 品牌需求 · 已匹配</div>
+      <h3>2026 秋季新款「都市风衣」</h3>
+      <ul>
+        <li><b>植入位</b>场次 2 · 风衣（主推位）</li>
+        <li><b>合作模式</b>CPS 佣金 15% ＋ 保底曝光费 ¥30,000</li>
+        <li><b>投放市场</b>🇺🇸 美国 · 🇯🇵 日本 · 🇨🇳 中国</li>
+        <li><b>预估效果</b>500 万播放 × 点击 1.8% × 转化 2.5% ≈ <b class="gold">2,250 单</b></li>
+      </ul>
+      <button id="confirmBtn" class="btn-gold">创作者确认植入方案</button>
+      <p class="wb-note">品牌零预付起步：按成交付佣，保底费仅覆盖制作排期。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ③ 生成期 · 前后对比 -->
+<section id="s2" class="sec">
+  <header class="sec-head reveal">
+    <i>02 · 生成期</i>
+    <h2>同一个镜头，衣服已经换成品牌款</h2>
+    <p>拖动中间的滑杆对比：左边是原片，右边是 AI 植入后。无需重拍、无需道具、无需明星档期。</p>
+  </header>
+
+  <div class="cmp-wrap reveal d1">
+    <div class="cmp" id="cmp">
+      <video id="vidA" src="assets/original.mp4" muted playsinline preload="auto" loop></video>
+      <div class="cmp-top" id="cmpTop">
+        <video id="vidB" src="assets/placed.mp4" muted playsinline preload="auto" loop></video>
+      </div>
+      <div class="cmp-handle" id="cmpHandle"><span>⇔</span></div>
+      <div class="cmp-tag tag-l">原片</div>
+      <div class="cmp-tag tag-r">AI 植入后</div>
+    </div>
+    <button id="cmpPlay" class="btn-line">▶ 同步播放对比</button>
+  </div>
+</section>
+
+<!-- ④ 变现期 · 观看页 -->
+<section id="s3" class="sec">
+  <header class="sec-head reveal">
+    <i>03 · 变现期</i>
+    <h2>观众看到的每一件衣服，都是一个成交入口</h2>
+    <p>弹幕在服装出现的瞬间引导注意力，商品卡与剧情时间轴绑定，链接按观众所在国家自动转向当地电商。</p>
+  </header>
+
+  <div class="stage reveal d1">
+    <div class="stage-phone">
+      <div class="country-switch" id="countrySwitch">
+        <button data-c="us" class="on">🇺🇸 美国</button>
+        <button data-c="jp">🇯🇵 日本</button>
+        <button data-c="cn">🇨🇳 中国</button>
+      </div>
+
+      <div class="phone">
+        <video id="vidP" src="assets/placed.mp4" muted playsinline preload="auto"></video>
+        <div class="brand-ribbon" id="brandRibbon">本剧集服装素材由 <b>LEAPX</b> 独家提供</div>
+        <div class="dm-layer" id="dmLayer"></div>
+
+        <div class="pcard" id="pcard">
+          <div class="pcard-tag">AI 已识别本帧服装 · 链接自动转向当地商城</div>
+          <div class="pcard-main">
+            <div class="pcard-img">🧥</div>
+            <div class="pcard-info">
+              <b id="pName"></b>
+              <span id="pStore"></span>
+              <em id="pPrice"></em>
+            </div>
+            <a id="pBuy" class="btn-gold" target="_blank" rel="noopener">立即购买</a>
+          </div>
+        </div>
+
+        <button class="pplay" id="pPlay" aria-label="播放">▶</button>
+      </div>
+      <div class="toast" id="toast"></div>
+    </div>
+
+    <aside class="notes">
+      <h3>投资人看点</h3>
+      <ol>
+        <li><b>片头冠名</b> — "品牌独家提供"标注，赞助心智前置到第 0 秒。</li>
+        <li><b>弹幕引导</b> — 风衣出场的瞬间，高亮弹幕把全场注意力导向购买入口。</li>
+        <li><b>商品卡直达</b> — 与剧情时间轴绑定，衣服出现即可点击下单。</li>
+        <li><b>全球自动转链</b> — 切换国家试试：同一件衣服，自动指向当地电商、当地货币。真实产品中由观众 IP 自动完成。</li>
+      </ol>
+      <p class="notes-tail">一次植入 · 全球变现 · 按成交分佣</p>
+    </aside>
+  </div>
+</section>
+
+<footer>
+  <p><b>剧链 DramaLink</b> · AI 时代的广告平台 —— 从脚本到成交的完整链路</p>
+  <p class="src">本页面为投资人演示 demo。LEAPX 为虚构品牌，剧集与数据卡点为示意。市场数据来自公开验证来源。</p>
+</footer>
+
+<script src="js/config.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
