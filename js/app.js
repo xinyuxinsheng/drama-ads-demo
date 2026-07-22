@@ -64,22 +64,31 @@
   const ribbon = $('brandRibbon'), dmLayer = $('dmLayer'), pcard = $('pcard');
   const toast = $('toast'), countrySwitch = $('countrySwitch');
   let firedDm = new Set();
-  let cardShown = false;
+  let firedCard = new Set();
+  let curCountry = 'us';
+  let curProduct = C.timeline[0].product;
 
   vidP.src = C.playerVideo;
 
-  // 国家切换
-  function applyCountry(code, silent) {
-    const p = C.products[code];
+  // 按"当前商品 × 当前国家"刷新商品卡
+  function renderCard() {
+    const prod = C.products[curProduct];
+    const p = prod.countries[curCountry];
+    $('pPhoto').src = prod.img;
     $('pName').textContent = p.name;
     $('pStore').textContent = p.store;
     $('pPrice').textContent = p.price;
     $('pBuy').href = p.url;
+  }
+
+  function applyCountry(code, silent) {
+    curCountry = code;
+    renderCard();
     countrySwitch.querySelectorAll('button').forEach((b) =>
       b.classList.toggle('on', b.dataset.c === code)
     );
     if (!silent) {
-      toast.textContent = p.toast;
+      toast.textContent = C.toasts[code];
       toast.classList.add('show');
       clearTimeout(toast._t);
       toast._t = setTimeout(() => toast.classList.remove('show'), 2400);
@@ -89,6 +98,19 @@
     const btn = e.target.closest('button');
     if (btn) applyCountry(btn.dataset.c);
   });
+
+  // 时间轴换卡：镜头切到哪，卡就跟到哪
+  function showTimelineCard(item) {
+    curProduct = item.product;
+    $('pTag').textContent = item.tag;
+    $('pMore').textContent = item.more;
+    renderCard();
+    pcard.classList.add('show');
+    // 换卡小动画：重触发入场
+    pcard.style.animation = 'none';
+    void pcard.offsetWidth;
+    pcard.style.animation = 'genin .45s ease';
+  }
   applyCountry('us', true);
 
   // 弹幕
@@ -103,7 +125,7 @@
 
   function resetOverlays() {
     firedDm = new Set();
-    cardShown = false;
+    firedCard = new Set();
     pcard.classList.remove('show');
     dmLayer.innerHTML = '';
   }
@@ -114,7 +136,9 @@
     C.danmaku.forEach((d, i) => {
       if (t >= d.t && !firedDm.has(i)) { firedDm.add(i); spawnDm(d); }
     });
-    if (t >= C.productAt && !cardShown) { cardShown = true; pcard.classList.add('show'); }
+    C.timeline.forEach((item, i) => {
+      if (t >= item.at && !firedCard.has(i)) { firedCard.add(i); showTimelineCard(item); }
+    });
   });
 
   pPlay.addEventListener('click', () => {
