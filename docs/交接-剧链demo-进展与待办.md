@@ -8,7 +8,7 @@
 
 ## 目标与现状
 
-四屏单页 demo：封面 → 脚本期植入工作台 → 生成期前后对比滑杆 → 变现期手机播放器（片头冠名 + 弹幕引导 + 商品卡 + 美/日/中自动转链）。
+四屏单页 demo：封面 → 脚本期植入工作台（五步流程：上传脚本/AI 分析植入点/商品匹配推荐/剧方确认/镜头生成；3 个虚构商品 LEAPX 风衣、VELO 运动鞋、MIROA 礼服，带自绘三视图 SVG，可点选切换）→ 生成期左右并排对比（中间连线标注植入商品，同步播放）→ 变现期手机播放器（片头冠名 + 弹幕引导 + 商品卡 + 美/日/中自动转链）。商品三视图用自绘金色线稿 SVG（assets/tv-*.svg），未用网图（版权考虑）。
 
 - 代码：`~/Claude/drama-ads-demo/`（独立 git 仓库，GitHub `xinyuxinsheng/drama-ads-demo`）
 - 线上：https://xinyuxinsheng.github.io/drama-ads-demo/（GitHub Pages）

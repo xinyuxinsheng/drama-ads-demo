@@ -33,7 +33,7 @@
   </div>
 
   <div class="flow reveal d4">
-    <a href="#s1" class="flow-step"><i>01</i><b>脚本期</b><span>AI 植入规划 · 创作者确认</span></a>
+    <a href="#s1" class="flow-step"><i>01</i><b>脚本期</b><span>AI 植入规划 · 商品匹配 · 剧方确认</span></a>
     <a href="#s2" class="flow-step"><i>02</i><b>生成期</b><span>无痕服装植入</span></a>
     <a href="#s3" class="flow-step"><i>03</i><b>变现期</b><span>弹幕引导 · 全球自动转链</span></a>
   </div>
@@ -45,37 +45,84 @@
   <header class="sec-head reveal">
     <i>01 · 脚本期</i>
     <h2>剧本还没开拍，广告位已经卖出去了</h2>
-    <p>AI 通读剧本，自动标注可植入位；品牌需求自动匹配；创作者一键确认——植入不再是事后硬塞，而是创作的一部分。</p>
+    <p>剧方上传脚本 → AI 分析植入点 → 算法按匹配度推荐商品 → 剧方最终确认 → 进入镜头生成。植入不再是事后硬塞，而是创作的一部分。</p>
   </header>
 
-  <div class="wb reveal d1">
-    <div class="wb-script">
-      <div class="wb-script-head">《逆袭千金的巴黎行》 · 剧本 v3 · AI 植入分析完成</div>
-      <div class="scene">
-        <h4>场次 2 · 内景 · 女主公寓 · 清晨</h4>
-        <p>林晚从衣柜取出一件<mark data-spot="1">风衣<em>植入位 ①</em></mark>，对镜整理衣领，深吸一口气。</p>
-        <p class="line">林晚：「今天，是我夺回一切的第一天。」</p>
+  <div class="pipe reveal d1">
+    <div class="pstep done"><i>1</i><b>上传脚本</b></div>
+    <div class="pstep done"><i>2</i><b>AI 分析植入点</b></div>
+    <div class="pstep act" id="stepMatch"><i>3</i><b>商品匹配推荐</b></div>
+    <div class="pstep" id="stepConfirm"><i>4</i><b>剧方确认</b></div>
+    <div class="pstep" id="stepGen"><i>5</i><b>镜头生成</b></div>
+  </div>
+
+  <div class="wb reveal d2">
+    <div class="wb-left">
+      <div class="upload-card">
+        <span class="upload-ok">✓</span>
+        <div><b>《逆袭千金的巴黎行》剧本 v3.pdf</b><span>剧方已上传 · 32 集 · AI 分析完成，标注 3 个植入位</span></div>
       </div>
-      <div class="scene">
-        <h4>场次 5 · 外景 · 街头 · 日</h4>
-        <p>林晚快步穿过人流，<mark data-spot="2">运动鞋<em>植入位 ②</em></mark>特写，脚步坚定有力。</p>
-      </div>
-      <div class="scene">
-        <h4>场次 9 · 内景 · 晚宴 · 夜</h4>
-        <p>林晚身着<mark data-spot="3">晚礼服<em>植入位 ③</em></mark>缓步入场，全场安静了三秒。</p>
+
+      <div class="wb-script">
+        <div class="wb-script-head">AI 植入点分析</div>
+        <div class="scene">
+          <h4>场次 2 · 内景 · 女主公寓 · 清晨</h4>
+          <p>林晚从衣柜取出一件<mark>外套<em>植入位 ①</em></mark>，对镜整理衣领，深吸一口气。</p>
+          <p class="line">林晚：「今天，是我夺回一切的第一天。」</p>
+        </div>
+        <div class="scene">
+          <h4>场次 5 · 外景 · 街头 · 日</h4>
+          <p>林晚快步穿过人流，<mark>鞋<em>植入位 ②</em></mark>特写，脚步坚定有力。</p>
+        </div>
+        <div class="scene">
+          <h4>场次 9 · 内景 · 晚宴 · 夜</h4>
+          <p>林晚身着<mark>礼服<em>植入位 ③</em></mark>缓步入场，全场安静了三秒。</p>
+        </div>
       </div>
     </div>
 
-    <div class="wb-brand">
-      <div class="wb-brand-head"><span class="logo-chip">LEAPX</span> 品牌需求 · 已匹配</div>
-      <h3>2026 秋季新款「都市风衣」</h3>
-      <ul>
-        <li><b>植入位</b>场次 2 · 风衣（主推位）</li>
-        <li><b>合作模式</b>CPS 佣金 15% ＋ 保底曝光费 ¥30,000</li>
-        <li><b>投放市场</b>🇺🇸 美国 · 🇯🇵 日本 · 🇨🇳 中国</li>
-        <li><b>预估效果</b>500 万播放 × 点击 1.8% × 转化 2.5% ≈ <b class="gold">2,250 单</b></li>
-      </ul>
-      <button id="confirmBtn" class="btn-gold">创作者确认植入方案</button>
+    <div class="wb-right">
+      <div class="match-head">植入位 ① · 匹配到 3 个商品<span>商家已设定剧集偏好 · 按匹配度排序</span></div>
+
+      <div class="mcard sel" data-name="LEAPX 都市风衣">
+        <div class="mcard-top">
+          <span class="reco">AI 推荐</span>
+          <b>LEAPX 都市风衣</b>
+          <em class="score">匹配度 96%</em>
+        </div>
+        <img src="assets/tv-coat.svg" alt="LEAPX 都市风衣三视图" class="tv">
+        <ul>
+          <li>商家偏好：都市情感剧 · 女主主角位 · 美/日/中市场</li>
+          <li>合作模式：CPS 佣金 15% ＋ 保底曝光费 ¥30,000</li>
+        </ul>
+      </div>
+
+      <div class="mcard" data-name="VELO 轻跑运动鞋">
+        <div class="mcard-top">
+          <b>VELO 轻跑运动鞋</b>
+          <em class="score">匹配度 88%</em>
+        </div>
+        <img src="assets/tv-shoe.svg" alt="VELO 轻跑运动鞋三视图" class="tv">
+        <ul>
+          <li>商家偏好：都市剧 · 街头场景 · 美/中市场</li>
+          <li>合作模式：CPS 佣金 12% ＋ 保底曝光费 ¥18,000</li>
+        </ul>
+      </div>
+
+      <div class="mcard" data-name="MIROA 缎面晚礼服">
+        <div class="mcard-top">
+          <b>MIROA 缎面晚礼服</b>
+          <em class="score">匹配度 83%</em>
+        </div>
+        <img src="assets/tv-dress.svg" alt="MIROA 缎面晚礼服三视图" class="tv">
+        <ul>
+          <li>商家偏好：豪门/晚宴场景 · 女主主角位 · 日/中市场</li>
+          <li>合作模式：CPS 佣金 18% ＋ 保底曝光费 ¥25,000</li>
+        </ul>
+      </div>
+
+      <button id="confirmBtn" class="btn-gold">剧方确认植入：LEAPX 都市风衣</button>
+      <div class="gen-card" id="genCard">🎬 已进入镜头生成队列 · <a href="#s2">前往生成期查看效果 ↓</a></div>
       <p class="wb-note">品牌零预付起步：按成交付佣，保底费仅覆盖制作排期。</p>
     </div>
   </div>
@@ -86,18 +133,32 @@
   <header class="sec-head reveal">
     <i>02 · 生成期</i>
     <h2>同一个镜头，衣服已经换成品牌款</h2>
-    <p>拖动中间的滑杆对比：左边是原片，右边是 AI 植入后。无需重拍、无需道具、无需明星档期。</p>
+    <p>左边原片，右边 AI 植入后，中间标注本镜头植入了什么。无需重拍、无需道具、无需明星档期。</p>
   </header>
 
-  <div class="cmp-wrap reveal d1">
-    <div class="cmp" id="cmp">
-      <video id="vidA" src="assets/original.mp4" muted playsinline preload="auto" loop></video>
-      <div class="cmp-top" id="cmpTop">
-        <video id="vidB" src="assets/placed.mp4" muted playsinline preload="auto" loop></video>
+  <div class="duo-wrap reveal d1">
+    <div class="duo">
+      <figure class="duo-cell">
+        <video id="vidA" src="assets/original.mp4" muted playsinline preload="auto" loop></video>
+        <figcaption>原片</figcaption>
+        <span class="dot dot-l"></span>
+      </figure>
+
+      <div class="duo-link">
+        <div class="duo-chip">
+          <span class="ln ln-l"></span>
+          <i>AI 植入</i>
+          <b>LEAPX 都市风衣</b>
+          <span class="pos">场次 2 · 00:04</span>
+          <span class="ln ln-r"></span>
+        </div>
       </div>
-      <div class="cmp-handle" id="cmpHandle"><span>⇔</span></div>
-      <div class="cmp-tag tag-l">原片</div>
-      <div class="cmp-tag tag-r">AI 植入后</div>
+
+      <figure class="duo-cell">
+        <video id="vidB" src="assets/placed.mp4" muted playsinline preload="auto" loop></video>
+        <figcaption class="hl">AI 植入后</figcaption>
+        <span class="dot dot-r"></span>
+      </figure>
     </div>
     <button id="cmpPlay" class="btn-line">▶ 同步播放对比</button>
   </div>
@@ -157,7 +218,7 @@
 
 <footer>
   <p><b>剧链 DramaLink</b> · AI 时代的广告平台 —— 从脚本到成交的完整链路</p>
-  <p class="src">本页面为投资人演示 demo。LEAPX 为虚构品牌，剧集与数据卡点为示意。市场数据来自公开验证来源。</p>
+  <p class="src">本页面为投资人演示 demo。LEAPX / VELO / MIROA 均为虚构品牌，剧集与数据卡点为示意。市场数据来自公开验证来源。</p>
 </footer>
 
 <script src="js/config.js"></script>

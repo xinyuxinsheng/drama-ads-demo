@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 158" fill="none">
+  <g stroke="#d4b06a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+    <!-- 侧面 -->
+    <g transform="translate(15,4)">
+      <path d="M14,98 Q13,110 26,110 L82,110 Q93,109 91,98 L88,86 Q70,68 52,66 Q34,64 22,74 Q14,82 14,98 Z"/>
+      <path d="M14,98 L91,98"/>
+      <path d="M30,80 L44,72 M36,86 L52,76 M42,92 L60,80"/>
+      <path d="M64,70 Q76,74 88,86"/>
+    </g>
+    <!-- 俯视 -->
+    <g transform="translate(145,4)">
+      <path d="M50,14 Q68,16 66,50 L62,104 Q60,116 50,116 Q40,116 38,104 L34,50 Q32,16 50,14 Z"/>
+      <path d="M40,42 L60,42 M40,54 L60,54 M40,66 L60,66 M40,78 L60,78"/>
+      <path d="M44,26 Q50,22 56,26"/>
+    </g>
+    <!-- 后跟 -->
+    <g transform="translate(275,4)">
+      <path d="M34,110 Q30,108 31,96 Q32,72 40,60 Q50,50 60,60 Q68,72 69,96 Q70,108 66,110 Z"/>
+      <path d="M31,96 L69,96"/>
+      <path d="M50,60 L50,88"/>
+    </g>
+  </g>
+  <g fill="#9a97a3" font-family="PingFang SC,sans-serif" font-size="11" text-anchor="middle">
+    <text x="65" y="150">侧面</text><text x="195" y="150">俯视</text><text x="325" y="150">后跟</text>
+  </g>
+</svg>

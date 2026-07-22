@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 158" fill="none">
+  <g stroke="#d4b06a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+    <!-- 正面 -->
+    <g transform="translate(15,4)">
+      <path d="M40,18 L44,34 L50,40 L56,34 L60,18"/>
+      <path d="M44,34 Q36,44 36,58 L34,66 Q50,74 66,66 L64,58 Q64,44 56,34"/>
+      <path d="M34,66 Q22,96 28,120 Q50,128 72,120 Q78,96 66,66"/>
+      <path d="M40,70 L38,118 M60,70 L62,118"/>
+    </g>
+    <!-- 侧面 -->
+    <g transform="translate(145,4)">
+      <path d="M48,18 L46,34 Q42,46 44,60 L42,66 Q40,96 40,118 Q52,126 60,118 Q62,92 56,66 L54,60 Q56,46 52,34 L52,18"/>
+    </g>
+    <!-- 背面 -->
+    <g transform="translate(275,4)">
+      <path d="M40,18 L44,34 L50,48 L56,34 L60,18"/>
+      <path d="M44,34 Q36,44 36,58 L34,66 Q50,74 66,66 L64,58 Q64,44 56,34"/>
+      <path d="M34,66 Q22,96 28,120 Q50,128 72,120 Q78,96 66,66"/>
+      <path d="M50,74 L50,122"/>
+    </g>
+  </g>
+  <g fill="#9a97a3" font-family="PingFang SC,sans-serif" font-size="11" text-anchor="middle">
+    <text x="65" y="150">正面</text><text x="195" y="150">侧面</text><text x="325" y="150">背面</text>
+  </g>
+</svg>

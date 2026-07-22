@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 158" fill="none">
+  <g stroke="#d4b06a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+    <!-- 正面 -->
+    <g transform="translate(15,4)">
+      <path d="M30,25 Q50,17 70,25 L80,50 L76,118 L24,118 L20,50 Z"/>
+      <path d="M42,21 L50,42 L58,21"/>
+      <path d="M42,21 L35,50 M58,21 L65,50"/>
+      <path d="M24,72 L76,72"/>
+      <rect x="46" y="67" width="9" height="10" rx="1.5"/>
+      <path d="M20,50 L13,100 L26,103 M80,50 L87,100 L74,103"/>
+      <circle cx="42" cy="58" r="1.8" fill="#d4b06a"/><circle cx="58" cy="58" r="1.8" fill="#d4b06a"/>
+      <circle cx="42" cy="94" r="1.8" fill="#d4b06a"/><circle cx="58" cy="94" r="1.8" fill="#d4b06a"/>
+    </g>
+    <!-- 侧面 -->
+    <g transform="translate(145,4)">
+      <path d="M46,20 Q60,25 58,45 L63,116 L38,116 L41,45 Q38,26 46,20 Z"/>
+      <path d="M46,20 L54,33"/>
+      <path d="M45,48 L41,100"/>
+      <path d="M39,72 L62,72"/>
+    </g>
+    <!-- 背面 -->
+    <g transform="translate(275,4)">
+      <path d="M30,25 Q50,17 70,25 L80,50 L76,118 L24,118 L20,50 Z"/>
+      <path d="M27,40 Q50,49 73,40"/>
+      <path d="M50,49 L50,95 M50,95 L44,118 M50,95 L56,118"/>
+      <path d="M24,72 L76,72"/>
+      <path d="M20,50 L13,100 L26,103 M80,50 L87,100 L74,103"/>
+    </g>
+  </g>
+  <g fill="#9a97a3" font-family="PingFang SC,sans-serif" font-size="11" text-anchor="middle">
+    <text x="65" y="150">正面</text><text x="195" y="150">侧面</text><text x="325" y="150">背面</text>
+  </g>
+</svg>

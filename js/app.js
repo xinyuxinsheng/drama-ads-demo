@@ -10,41 +10,34 @@
   );
   document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
 
-  /* ===== ① 工作台：创作者确认 ===== */
+  /* ===== ① 工作台：商品选择 + 剧方确认 + 步骤推进 ===== */
   const confirmBtn = $('confirmBtn');
+  const mcards = document.querySelectorAll('.mcard');
+  let chosen = 'LEAPX 都市风衣';
+  let confirmed = false;
+
+  mcards.forEach((card) => {
+    card.addEventListener('click', () => {
+      if (confirmed) return;
+      mcards.forEach((c) => c.classList.remove('sel'));
+      card.classList.add('sel');
+      chosen = card.dataset.name;
+      confirmBtn.textContent = '剧方确认植入：' + chosen;
+    });
+  });
+
   confirmBtn.addEventListener('click', () => {
-    confirmBtn.textContent = '✓ 已确认 · 进入 AI 生成排期';
+    confirmed = true;
+    confirmBtn.textContent = '✓ 已确认植入 ' + chosen;
     confirmBtn.classList.add('done');
+    $('stepMatch').classList.replace('act', 'done');
+    $('stepConfirm').classList.add('done');
+    $('stepGen').classList.add('act');
+    $('genCard').classList.add('show');
   });
 
-  /* ===== ② 前后对比滑杆 ===== */
-  const cmp = $('cmp'), cmpTop = $('cmpTop'), cmpHandle = $('cmpHandle');
+  /* ===== ② 前后对比：同步播放 ===== */
   const vidA = $('vidA'), vidB = $('vidB'), cmpPlay = $('cmpPlay');
-
-  function fitTopVideo() { vidB.style.width = cmp.clientWidth + 'px'; }
-  window.addEventListener('resize', fitTopVideo);
-  fitTopVideo();
-
-  function setSplit(ratio) {
-    const r = Math.min(0.97, Math.max(0.03, ratio));
-    cmpTop.style.width = r * 100 + '%';
-    cmpHandle.style.left = r * 100 + '%';
-  }
-  setSplit(0.5);
-
-  let dragging = false;
-  const posToRatio = (clientX) => {
-    const rect = cmp.getBoundingClientRect();
-    return (clientX - rect.left) / rect.width;
-  };
-  cmp.addEventListener('pointerdown', (e) => {
-    dragging = true;
-    cmp.setPointerCapture(e.pointerId);
-    setSplit(posToRatio(e.clientX));
-  });
-  cmp.addEventListener('pointermove', (e) => dragging && setSplit(posToRatio(e.clientX)));
-  cmp.addEventListener('pointerup', () => (dragging = false));
-  cmp.addEventListener('pointercancel', () => (dragging = false));
 
   cmpPlay.addEventListener('click', () => {
     if (vidA.paused) {
