@@ -11,7 +11,7 @@
 - 代码 `~/Claude/drama-ads-demo/`（GitHub `xinyuxinsheng/drama-ads-demo`），线上 https://xinyuxinsheng.github.io/drama-ads-demo/
 - 三阶段按行业术语命名：**剧本开发·智能植入规划 / AI 成片·无痕植入生成 / 上线投流·全球转链变现**
 - 剧本开发：五步流程条 + 剧本《她的耳机里没有歌》两场戏标 5 个植入位（数码/背具/服装/道具/场景）；商品卡三种形态——已匹配（Sony 耳机、Kånken 背包）、剧方候选二选一（adidas T恤 vs Samba，可点选）、**多品牌竞价**（扇面广告位：大众点评必吃榜 ¥52,000 中标 vs 高德扫街榜 ¥45,000 未中标）
-- AI 成片：三组横屏"原片 vs 植入后"对比，滚动进视口自动同步循环播放（IntersectionObserver）
+- AI 成片：三组横屏对比，滚动进视口自动同步循环播放（IntersectionObserver）。第三组是**千人千面**：vb-original（空白山水扇原片）→ 右侧两个投放版本（vb-dianping 必吃榜给美食人群 / vb-gaode 扫街榜给出行人群），讲"同一广告位按人群反复售卖"；工作台竞价卡口径已联动（高德=定向份额）
 - 投流变现：横屏播放器（va-placed），片头植入声明、弹幕（config 卡点）、Sony 商品卡 + 美/日/中转链（Amazon $278 / 楽天 ¥42,900 / 天猫 ¥1,899，示例价）
 - 用户提供的真实素材：三对原片/植入后视频（横屏）+ 6 张商品图，均已入 assets/（对应关系见 README）
 - 页脚已声明：所有品牌仅为演示示意，非真实合作

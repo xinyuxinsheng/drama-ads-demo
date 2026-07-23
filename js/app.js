@@ -49,12 +49,16 @@
     { threshold: 0.35 }
   );
   document.querySelectorAll('.duo-row').forEach((row) => rowIO.observe(row));
-  // 轻量纠偏：同组两条视频防漂移
+  // 轻量纠偏：同组视频（2 条或 3 条）以第一条为基准防漂移
   setInterval(() => {
     document.querySelectorAll('.duo-row').forEach((row) => {
-      const [a, b] = row.querySelectorAll('video');
-      if (a && b && !a.paused && Math.abs(a.currentTime - b.currentTime) > 0.08) {
-        b.currentTime = a.currentTime;
+      const vids = row.querySelectorAll('video');
+      const base = vids[0];
+      if (!base || base.paused) return;
+      for (let i = 1; i < vids.length; i++) {
+        if (Math.abs(base.currentTime - vids[i].currentTime) > 0.08) {
+          vids[i].currentTime = base.currentTime;
+        }
       }
     });
   }, 800);
