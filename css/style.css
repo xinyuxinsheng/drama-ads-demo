@@ -208,16 +208,16 @@ mark em{font-size:10.5px;background:var(--gold);color:#0b0b10;border-radius:4px;
 .btn-line:hover{background:rgba(212,176,106,.1);}
 
 /* ————— 投流变现 · 横屏播放器 ————— */
-.stage{display:grid;grid-template-columns:minmax(0,1.5fr) 1fr;gap:34px;align-items:start;justify-content:center;}
+.stage{display:flex;flex-direction:column;align-items:center;gap:30px;}
 .stage-player{display:flex;flex-direction:column;align-items:center;gap:16px;min-width:0;
-  width:100%;max-width:660px;justify-self:center;}
+  width:100%;max-width:880px;}
 .country-switch{display:flex;gap:6px;background:var(--panel);border:1px solid var(--line);
   border-radius:99px;padding:5px;}
 .country-switch button{border:none;background:transparent;color:var(--sub);font-size:13.5px;
   padding:8px 18px;border-radius:99px;cursor:pointer;transition:.25s;font-family:inherit;letter-spacing:.5px;}
 .country-switch button.on{background:linear-gradient(120deg,var(--gold-hi),var(--gold-deep));color:#17120a;font-weight:700;}
 
-.screen{position:relative;width:100%;max-width:660px;aspect-ratio:16/9;border-radius:16px;
+.screen{position:relative;width:100%;max-width:880px;aspect-ratio:16/9;border-radius:16px;
   border:2px solid #2c2c36;background:#000;overflow:hidden;
   box-shadow:0 26px 80px rgba(0,0,0,.6);}
 .screen video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
@@ -236,23 +236,23 @@ mark em{font-size:10.5px;background:var(--gold);color:#0b0b10;border-radius:4px;
   border:1px solid var(--line-gold);border-radius:99px;padding:3px 12px;}
 @keyframes dmfly{to{transform:translateX(calc(-100% - 110vw));}}
 
-.pcard{position:absolute;left:10px;right:10px;bottom:12px;z-index:9;
-  background:rgba(16,16,22,.94);border:1px solid var(--line-gold);border-radius:16px;
-  padding:10px 12px;transform:translateY(130%);transition:transform .55s cubic-bezier(.2,.9,.3,1.05);}
+.pcard{position:absolute;left:12px;bottom:12px;z-index:9;width:min(340px,62%);
+  background:rgba(16,16,22,.94);border:1px solid var(--line-gold);border-radius:13px;
+  padding:8px 10px;transform:translateY(140%);transition:transform .55s cubic-bezier(.2,.9,.3,1.05);}
 .pcard.show{transform:translateY(0);}
-.pcard-tag{font-size:10.5px;color:var(--gold);letter-spacing:.5px;margin-bottom:7px;}
+.pcard-tag{font-size:9.5px;color:var(--gold);letter-spacing:.3px;margin-bottom:6px;}
 .pcard-tag::before{content:"●";margin-right:5px;animation:blink 1.4s infinite;}
 @keyframes blink{50%{opacity:.25;}}
 .pcard-main{display:flex;align-items:center;gap:10px;}
-.pcard-photo{width:54px;height:54px;border-radius:10px;background:#fff;object-fit:contain;
-  border:1px solid var(--line);flex:none;padding:3px;}
-.pcard-more{font-size:10.5px;color:var(--sub);margin-top:7px;padding-top:7px;
+.pcard-photo{width:42px;height:42px;border-radius:9px;background:#fff;object-fit:contain;
+  border:1px solid var(--line);flex:none;padding:2px;}
+.pcard-more{font-size:9.5px;color:var(--sub);margin-top:6px;padding-top:6px;
   border-top:1px dashed var(--line);}
-.pcard-info{flex:1;min-width:0;line-height:1.45;}
-.pcard-info b{display:block;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.pcard-info span{font-size:10.5px;color:var(--sub);display:block;}
-.pcard-info em{font-family:Didot,Georgia,serif;font-size:15px;color:var(--gold-hi);font-weight:700;}
-.pcard .btn-gold{width:auto;margin:0;padding:9px 14px;font-size:12.5px;border-radius:9px;flex:none;}
+.pcard-info{flex:1;min-width:0;line-height:1.4;}
+.pcard-info b{display:block;font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pcard-info span{font-size:9.5px;color:var(--sub);display:block;}
+.pcard-info em{font-family:Didot,Georgia,serif;font-size:13.5px;color:var(--gold-hi);font-weight:700;}
+.pcard .btn-gold{width:auto;margin:0;padding:7px 11px;font-size:11.5px;border-radius:8px;flex:none;}
 
 .pplay{position:absolute;inset:0;margin:auto;width:74px;height:74px;border-radius:50%;z-index:11;
   border:1px solid var(--line-gold);background:rgba(11,11,16,.72);color:var(--gold-hi);
@@ -265,13 +265,15 @@ mark em{font-size:10.5px;background:var(--gold);color:#0b0b10;border-radius:4px;
   opacity:0;transition:.4s;letter-spacing:.5px;}
 .toast.show{opacity:1;}
 
-.notes{background:var(--panel);border:1px solid var(--line);border-radius:16px;
-  padding:24px 26px;max-width:420px;position:sticky;top:90px;}
-.notes h3{font-family:"Songti SC","Noto Serif SC",serif;font-size:19px;margin-bottom:14px;
-  color:var(--gold-hi);letter-spacing:1px;}
-.notes ol{padding-left:20px;}
-.notes li{font-size:13.5px;color:#cdcad4;margin-bottom:12px;}
-.notes li b{color:var(--ink);}
+/* 植入点：视频下方从左到右 */
+.points-wrap{width:100%;max-width:880px;}
+.points-wrap h3{font-family:"Songti SC","Noto Serif SC",serif;font-size:19px;margin-bottom:12px;
+  color:var(--gold-hi);letter-spacing:2px;}
+.points{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.point{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;}
+.point i{font-family:Didot,Georgia,serif;font-style:normal;font-size:12px;color:var(--gold);letter-spacing:2px;}
+.point b{display:block;font-size:14px;margin:5px 0 4px;}
+.point span{font-size:12px;color:var(--sub);line-height:1.65;display:block;}
 .notes-tail{margin-top:16px;padding-top:14px;border-top:1px dashed var(--line);
   font-family:"Songti SC","Noto Serif SC",serif;font-size:15px;color:var(--gold);
   letter-spacing:3px;text-align:center;}
@@ -292,10 +294,13 @@ footer .src{font-size:11.5px;color:#5b5964;margin-top:8px;}
   .nav{padding:12px 16px;}
 }
 @media (max-width:900px){
-  .stage{grid-template-columns:1fr;justify-items:center;}
-  .notes{position:static;max-width:min(660px,100%);}
   .wb{grid-template-columns:1fr;}
+  .points{grid-template-columns:repeat(2,1fr);}
   .nav-steps a{padding:6px 10px;font-size:12px;}
+}
+@media (max-width:540px){
+  .points{grid-template-columns:1fr;}
+  .pcard{width:min(320px,78%);}
 }
 @media (max-width:760px){
   .duo-row{flex-direction:column;gap:12px;}
