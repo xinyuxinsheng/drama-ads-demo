@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>剧链植入助手 · 生成工具插件演示</title>
+<style>
+:root{--bg:#101014;--panel:#17171d;--panel2:#1e1e26;--line:#2a2a34;--ink:#ecebf0;--sub:#8b8a96;
+  --gold:#d4b06a;--gold-hi:#e9cf94;--gold-deep:#b98a3e;--green:#8fd694;--blue:#6ea8fe;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--ink);font-family:-apple-system,"PingFang SC","Hiragino Sans GB",sans-serif;
+  min-height:100svh;display:flex;flex-direction:column;}
+button{font-family:inherit;cursor:pointer;}
+
+/* 顶栏：宿主工具壳 */
+.topbar{display:flex;align-items:center;gap:14px;padding:12px 20px;border-bottom:1px solid var(--line);background:var(--panel);}
+.host-logo{font-weight:700;font-size:15px;letter-spacing:1px;color:var(--sub);}
+.host-logo b{color:var(--ink);}
+.demo-chip{font-size:11px;color:var(--gold-hi);border:1px solid rgba(212,176,106,.4);border-radius:99px;padding:3px 10px;}
+.topbar .sp{flex:1;}
+.back{font-size:12.5px;color:var(--sub);text-decoration:none;}
+.back:hover{color:var(--gold-hi);}
+
+.main{flex:1;display:grid;grid-template-columns:250px 1fr 320px;gap:0;min-height:0;}
+
+/* 左：提示词面板 */
+.left{border-right:1px solid var(--line);padding:18px 16px;background:var(--panel);}
+.left h4{font-size:12px;color:var(--sub);letter-spacing:1px;margin-bottom:8px;}
+.prompt{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:10px;color:var(--ink);
+  font-size:12.5px;line-height:1.8;padding:12px;height:170px;resize:none;font-family:inherit;}
+.opts{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0;}
+.opt{font-size:11px;color:var(--sub);border:1px solid var(--line);border-radius:99px;padding:3px 10px;}
+.opt.on{color:var(--blue);border-color:var(--blue);}
+.gen-btn{width:100%;padding:11px;border:none;border-radius:10px;background:#32323e;color:var(--ink);
+  font-size:13.5px;font-weight:600;}
+.gen-btn:hover{background:#3b3b48;}
+.left .note{font-size:11px;color:var(--sub);margin-top:12px;line-height:1.7;}
+
+/* 中：预览 */
+.center{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;gap:12px;min-width:0;}
+.stage{position:relative;width:100%;max-width:720px;aspect-ratio:16/9;border-radius:12px;overflow:hidden;
+  background:#000;border:1px solid var(--line);}
+.stage video{width:100%;height:100%;object-fit:cover;display:block;}
+.stage-tag{position:absolute;top:10px;left:10px;font-size:11px;padding:3px 10px;border-radius:99px;
+  background:rgba(16,16,20,.78);border:1px solid var(--line);z-index:3;}
+.stage-tag.br{left:auto;right:10px;color:var(--gold-hi);border-color:rgba(212,176,106,.5);display:none;}
+.stage-tag.br.show{display:block;}
+/* 识别框 */
+.det{position:absolute;border:1.5px dashed var(--gold);border-radius:8px;z-index:2;opacity:0;transition:opacity .5s;}
+.det.show{opacity:1;}
+.det i{position:absolute;top:-22px;left:-1px;font-style:normal;font-size:10.5px;background:var(--gold);
+  color:#17120a;border-radius:5px;padding:1px 7px;font-weight:700;white-space:nowrap;}
+.track{font-size:11.5px;color:var(--sub);display:flex;gap:14px;align-items:center;min-height:20px;}
+.track b{color:var(--green);font-weight:600;}
+
+/* 右：剧链插件面板 */
+.plugin{border-left:1px solid var(--line);background:linear-gradient(180deg,#1b1820,var(--panel));
+  padding:16px;display:flex;flex-direction:column;gap:10px;overflow-y:auto;}
+.pg-head{display:flex;align-items:center;gap:8px;}
+.pg-logo{font-family:Georgia,serif;font-size:12px;font-weight:700;letter-spacing:2px;background:linear-gradient(120deg,var(--gold-hi),var(--gold-deep));
+  color:#17120a;border-radius:6px;padding:2px 8px;}
+.pg-head b{font-size:13.5px;}
+.pg-sub{font-size:11px;color:var(--sub);line-height:1.7;}
+.scan{font-size:12px;color:var(--gold-hi);padding:8px 10px;background:rgba(212,176,106,.08);
+  border:1px solid rgba(212,176,106,.3);border-radius:9px;}
+.scan b{font-family:Georgia,serif;}
+.item{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:11px 12px;transition:.25s;}
+.item.applied{border-color:#2f4a30;}
+.item-top{display:flex;align-items:center;gap:9px;}
+.item-top img{width:40px;height:40px;border-radius:8px;background:#fff;object-fit:contain;padding:2px;flex:none;}
+.item-top .ti{flex:1;min-width:0;}
+.item-top .ti b{display:block;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.item-top .ti span{display:block;font-size:10.5px;color:var(--sub);}
+.item ul{list-style:none;margin-top:8px;}
+.item li{font-size:10.5px;color:var(--sub);padding:1.5px 0;}
+.item li em{font-style:normal;color:var(--gold-hi);}
+.use{width:100%;margin-top:9px;padding:8px;border:none;border-radius:8px;font-size:12px;font-weight:700;
+  background:linear-gradient(120deg,var(--gold-hi),var(--gold-deep));color:#17120a;}
+.item.applied .use{background:#1f2b1f;color:var(--green);border:1px solid #2f4a30;cursor:default;}
+.apply-all{width:100%;padding:11px;border:none;border-radius:10px;font-size:13px;font-weight:700;
+  background:linear-gradient(120deg,var(--gold-hi),var(--gold-deep));color:#17120a;letter-spacing:1px;}
+.apply-all.done{background:#1f2b1f;color:var(--green);border:1px solid #2f4a30;cursor:default;}
+.earn{background:var(--panel2);border:1px dashed rgba(212,176,106,.4);border-radius:10px;padding:10px 12px;
+  font-size:11px;color:var(--sub);line-height:1.8;}
+.earn b{color:var(--gold-hi);font-size:14px;font-family:Georgia,serif;}
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);background:rgba(20,26,20,.95);
+  color:var(--green);border:1px solid #2f4a30;border-radius:99px;padding:9px 20px;font-size:12.5px;
+  opacity:0;transition:.4s;pointer-events:none;white-space:nowrap;z-index:9;}
+.toast.show{opacity:1;}
+
+@media (max-width:900px){
+  .main{grid-template-columns:1fr;}
+  .left{display:none;}
+  .plugin{border-left:none;border-top:1px solid var(--line);}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="host-logo">▶ AI 短剧生成工具 <b>·（宿主平台示意）</b></span>
+  <span class="demo-chip">剧链插件演示 · 形态①</span>
+  <span class="sp"></span>
+  <a class="back" href="index.html">← 返回主演示</a>
+</div>
+
+<div class="main">
+  <!-- 左：宿主工具的生成面板 -->
+  <div class="left">
+    <h4>提示词</h4>
+    <textarea class="prompt" readonly>《她的耳机里没有歌》第 3 集 · 场次 3：
+林晚戴上耳机走出商场大门，肩上双肩包轻晃，白色T恤清爽利落，音乐响起，她扬起嘴角。阳光，都市感，电影质感。</textarea>
+    <div class="opts">
+      <span class="opt on">16:9</span><span class="opt">9:16</span>
+      <span class="opt on">4 秒</span><span class="opt">写实</span>
+    </div>
+    <button class="gen-btn">↻ 重新生成</button>
+    <p class="note">左侧为第三方生成工具界面示意。右侧金色面板是「剧链植入助手」插件——嵌入任何生成工具的工作流。</p>
+  </div>
+
+  <!-- 中：预览 -->
+  <div class="center">
+    <div class="stage">
+      <video id="vid" src="assets/va-original.mp4" muted playsinline autoplay loop></video>
+      <span class="stage-tag" id="stateTag">生成结果 · 未植入</span>
+      <span class="stage-tag br" id="trackTag">已绑定商品 ID · 转链追踪开启</span>
+      <div class="det" id="det1" style="left:38%;top:18%;width:16%;height:22%;"><i>耳机 · 可植入</i></div>
+      <div class="det" id="det2" style="left:30%;top:44%;width:17%;height:30%;"><i>背包 · 可植入</i></div>
+    </div>
+    <div class="track" id="trackLine"></div>
+  </div>
+
+  <!-- 右：剧链插件 -->
+  <div class="plugin">
+    <div class="pg-head"><span class="pg-logo">剧链</span><b>植入助手</b></div>
+    <p class="pg-sub">生成完成后自动识别画面中的可植入元素，从品牌资产库匹配官方商品素材。</p>
+
+    <div class="scan">✦ AI 已识别 <b>2</b> 个可植入元素</div>
+
+    <div class="item" id="item1">
+      <div class="item-top">
+        <img src="assets/p-sony.jpg" alt="Sony">
+        <div class="ti"><b>Sony WH-1000XM4 降噪耳机</b><span>识别元素：头戴耳机 · 匹配度 97%</span></div>
+      </div>
+      <ul>
+        <li>分佣 <em>12%</em> ＋ 品牌保底池 <em>¥20,000</em></li>
+        <li>官方素材：三视图 × 材质贴图 · 已授权</li>
+      </ul>
+      <button class="use" data-i="1">用品牌款（可分佣）</button>
+    </div>
+
+    <div class="item" id="item2">
+      <div class="item-top">
+        <img src="assets/p-kanken.jpg" alt="Kånken">
+        <div class="ti"><b>Fjällräven Kånken 双肩包 · 樱花粉</b><span>识别元素：双肩包 · 匹配度 94%</span></div>
+      </div>
+      <ul>
+        <li>分佣 <em>15%</em> ＋ 品牌保底池 <em>¥12,000</em></li>
+        <li>官方素材：三视图 × 材质贴图 · 已授权</li>
+      </ul>
+      <button class="use" data-i="2">用品牌款（可分佣）</button>
+    </div>
+
+    <button class="apply-all" id="applyAll">✦ 一键应用全部品牌款</button>
+
+    <div class="earn">
+      创作者预估增收（本片段）<br>
+      <b id="earnNum">¥0</b> <span id="earnUnit">/ 百万播放 · 应用品牌款后生效</span><br>
+      保底分成 ＋ CPS 成交分佣，随播放与成交实时结算
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  const vid=document.getElementById('vid');
+  const toast=document.getElementById('toast');
+  const applied={1:false,2:false};
+  let swapped=false;
+
+  // 生成结束后 1.5 秒，插件"识别"出可植入元素
+  setTimeout(()=>{
+    document.getElementById('det1').classList.add('show');
+    document.getElementById('det2').classList.add('show');
+    showToast('剧链插件：识别到 2 个可植入元素');
+    setTimeout(()=>{ document.getElementById('det1').classList.remove('show');
+                     document.getElementById('det2').classList.remove('show'); },3200);
+  },1500);
+
+  function showToast(t){
+    toast.textContent=t; toast.classList.add('show');
+    clearTimeout(toast._t); toast._t=setTimeout(()=>toast.classList.remove('show'),2600);
+  }
+
+  function refresh(){
+    const n=(applied[1]?1:0)+(applied[2]?1:0);
+    if(n>0&&!swapped){
+      swapped=true;
+      vid.src='assets/va-placed.mp4'; vid.play().catch(()=>{});
+      document.getElementById('stateTag').textContent='生成结果 · 已植入品牌款';
+      document.getElementById('trackTag').classList.add('show');
+      document.getElementById('trackLine').innerHTML='<b>✓ 商品 ID #SK-2941 / #FK-0117 已写入视频元数据</b><span>播放端商品卡与国别转链将自动挂载</span>';
+    }
+    const earn=(applied[1]?4200:0)+(applied[2]?3100:0);
+    document.getElementById('earnNum').textContent='¥'+earn.toLocaleString();
+    if(n===2){
+      const a=document.getElementById('applyAll');
+      a.textContent='✓ 已全部应用 · 商品追踪已开启'; a.classList.add('done');
+    }
+  }
+
+  function apply(i){
+    if(applied[i])return;
+    applied[i]=true;
+    const it=document.getElementById('item'+i);
+    it.classList.add('applied');
+    it.querySelector('.use').textContent='✓ 已替换为品牌款';
+    showToast(i==1?'已替换：Sony 降噪耳机 · 分佣绑定完成':'已替换：Kånken 双肩包 · 分佣绑定完成');
+    refresh();
+  }
+
+  document.querySelectorAll('.use').forEach(b=>b.addEventListener('click',()=>apply(b.dataset.i)));
+  document.getElementById('applyAll').addEventListener('click',()=>{apply('1');apply('2');});
+})();
+</script>
+</body>
+</html>

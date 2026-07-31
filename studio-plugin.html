@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>剧链植入工具包 · 承制方工作流演示</title>
+<style>
+:root{--bg:#101014;--panel:#17171d;--panel2:#1e1e26;--line:#2a2a34;--ink:#ecebf0;--sub:#8b8a96;
+  --gold:#d4b06a;--gold-hi:#e9cf94;--gold-deep:#b98a3e;--green:#8fd694;--blue:#6ea8fe;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--ink);font-family:-apple-system,"PingFang SC","Hiragino Sans GB",sans-serif;
+  min-height:100svh;display:flex;flex-direction:column;}
+button{font-family:inherit;cursor:pointer;}
+
+.topbar{display:flex;align-items:center;gap:14px;padding:12px 20px;border-bottom:1px solid var(--line);background:var(--panel);}
+.host-logo{font-weight:700;font-size:15px;letter-spacing:1px;color:var(--sub);}
+.host-logo b{color:var(--ink);}
+.demo-chip{font-size:11px;color:var(--gold-hi);border:1px solid rgba(212,176,106,.4);border-radius:99px;padding:3px 10px;}
+.topbar .sp{flex:1;}
+.back{font-size:12.5px;color:var(--sub);text-decoration:none;}
+.back:hover{color:var(--gold-hi);}
+
+.main{flex:1;display:grid;grid-template-columns:1fr 330px;min-height:0;}
+
+/* 左：预览 + 时间线 */
+.edit{display:flex;flex-direction:column;padding:20px;gap:14px;min-width:0;}
+.preview{position:relative;width:100%;max-width:760px;aspect-ratio:16/9;margin:0 auto;border-radius:12px;
+  overflow:hidden;background:#000;border:1px solid var(--line);}
+.preview video{width:100%;height:100%;object-fit:cover;display:block;}
+.pv-tag{position:absolute;top:10px;left:10px;font-size:11px;padding:3px 10px;border-radius:99px;
+  background:rgba(16,16,20,.78);border:1px solid var(--line);}
+.pv-tag.ok{color:var(--green);border-color:#2f4a30;}
+
+.tl{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;}
+.tl h4{font-size:12px;color:var(--sub);letter-spacing:1px;margin-bottom:10px;}
+.clips{display:flex;gap:10px;}
+.clip{position:relative;flex:1;max-width:200px;border:2px solid var(--line);border-radius:10px;overflow:hidden;
+  cursor:pointer;transition:.25s;background:#000;}
+.clip img{width:100%;display:block;aspect-ratio:16/9;object-fit:cover;}
+.clip.cur{border-color:var(--blue);}
+.clip .cname{position:absolute;left:0;right:0;bottom:0;font-size:10.5px;padding:3px 8px;
+  background:linear-gradient(transparent,rgba(0,0,0,.85));}
+.clip .spots{position:absolute;top:6px;left:6px;font-size:10px;background:rgba(212,176,106,.92);
+  color:#17120a;font-weight:700;border-radius:5px;padding:1px 7px;}
+.clip .done-mk{position:absolute;top:6px;right:6px;font-size:10px;background:#1f2b1f;color:var(--green);
+  border:1px solid #2f4a30;border-radius:5px;padding:1px 7px;display:none;}
+.clip.applied .done-mk{display:block;}
+.tl .ruler{height:8px;margin-top:10px;border-radius:4px;
+  background:repeating-linear-gradient(90deg,var(--panel2) 0 38px,var(--line) 38px 40px);}
+
+/* 收益对比 */
+.rev{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;max-width:760px;margin:0 auto;width:100%;}
+.rev h4{font-size:12px;color:var(--sub);letter-spacing:1px;margin-bottom:12px;}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:12px;}
+.bar-row .lb{width:120px;color:var(--sub);flex:none;}
+.bar-wrap{flex:1;background:var(--panel2);border-radius:6px;height:22px;overflow:hidden;}
+.bar{height:100%;border-radius:6px;width:0;transition:width 1.2s cubic-bezier(.2,.8,.3,1);}
+.bar.base{background:#3a4a63;width:70%;}
+.bar.plus{background:linear-gradient(90deg,var(--gold-deep),var(--gold-hi));}
+.bar-row .val{width:110px;text-align:right;font-family:Georgia,serif;font-weight:700;flex:none;}
+.bar-row .val.gold{color:var(--gold-hi);}
+.rev .sum{font-size:11.5px;color:var(--sub);margin-top:6px;}
+.rev .sum b{color:var(--green);}
+
+/* 右：植入工具包 */
+.kit{border-left:1px solid var(--line);background:linear-gradient(180deg,#1b1820,var(--panel));
+  padding:16px;display:flex;flex-direction:column;gap:10px;overflow-y:auto;}
+.pg-head{display:flex;align-items:center;gap:8px;}
+.pg-logo{font-family:Georgia,serif;font-size:12px;font-weight:700;letter-spacing:2px;background:linear-gradient(120deg,var(--gold-hi),var(--gold-deep));
+  color:#17120a;border-radius:6px;padding:2px 8px;}
+.pg-head b{font-size:13.5px;}
+.pg-sub{font-size:11px;color:var(--sub);line-height:1.7;}
+.spot{background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:10px 12px;}
+.spot.applied{border-color:#2f4a30;}
+.spot-top{display:flex;align-items:center;gap:8px;}
+.spot-top img{width:34px;height:34px;border-radius:7px;background:#fff;object-fit:contain;padding:2px;flex:none;}
+.spot-top .si{flex:1;min-width:0;}
+.spot-top .si b{display:block;font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.spot-top .si span{display:block;font-size:10px;color:var(--sub);}
+.spot-top .fee{font-size:11px;color:var(--gold-hi);font-family:Georgia,serif;font-weight:700;white-space:nowrap;}
+.spot .st{font-size:10px;margin-top:6px;color:var(--sub);}
+.spot.applied .st{color:var(--green);}
+.apply-all{width:100%;padding:12px;border:none;border-radius:10px;font-size:13px;font-weight:700;
+  background:linear-gradient(120deg,var(--gold-hi),var(--gold-deep));color:#17120a;letter-spacing:1px;}
+.apply-all.done{background:#1f2b1f;color:var(--green);border:1px solid #2f4a30;cursor:default;}
+.kit .note{font-size:10.5px;color:var(--sub);line-height:1.7;border-top:1px dashed var(--line);padding-top:10px;}
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);background:rgba(20,26,20,.95);
+  color:var(--green);border:1px solid #2f4a30;border-radius:99px;padding:9px 20px;font-size:12.5px;
+  opacity:0;transition:.4s;pointer-events:none;white-space:nowrap;z-index:9;}
+.toast.show{opacity:1;}
+
+@media (max-width:900px){
+  .main{grid-template-columns:1fr;}
+  .kit{border-left:none;border-top:1px solid var(--line);}
+  .bar-row .lb{width:88px;font-size:11px;}
+  .bar-row .val{width:84px;font-size:12px;}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="host-logo">✂ 短剧承制工作台 <b>·（剪映 / ComfyUI 工作流示意）</b></span>
+  <span class="demo-chip">剧链插件演示 · 形态②</span>
+  <span class="sp"></span>
+  <a class="back" href="index.html">← 返回主演示</a>
+</div>
+
+<div class="main">
+  <div class="edit">
+    <div class="preview">
+      <video id="pv" src="assets/va-original.mp4" muted playsinline autoplay loop></video>
+      <span class="pv-tag" id="pvTag">场次 3 · 商场门前 · 未植入</span>
+    </div>
+
+    <div class="tl">
+      <h4>时间线 · 《她的耳机里没有歌》第 3 集</h4>
+      <div class="clips">
+        <div class="clip cur" data-c="va" data-name="场次 3 · 商场门前">
+          <img id="th-va" src="assets/th-va-o.jpg" alt="">
+          <span class="spots">2 植入位</span><span class="done-mk">已植入</span>
+          <span class="cname">场次 3 · 商场门前</span>
+        </div>
+        <div class="clip" data-c="vb" data-name="场次 12 · 茶馆特写">
+          <img id="th-vb" src="assets/th-vb-o.jpg" alt="">
+          <span class="spots">1 植入位</span><span class="done-mk">已植入</span>
+          <span class="cname">场次 12 · 折扇特写</span>
+        </div>
+        <div class="clip" data-c="vc" data-name="场次 12 · 茶馆全景">
+          <img id="th-vc" src="assets/th-vc-o.jpg" alt="">
+          <span class="spots">1 植入位</span><span class="done-mk">已植入</span>
+          <span class="cname">场次 12 · 茶馆全景</span>
+        </div>
+      </div>
+      <div class="ruler"></div>
+    </div>
+
+    <div class="rev">
+      <h4>本集收益对比（80 分钟 · 承制价按行业价 ¥2,400/分钟）</h4>
+      <div class="bar-row">
+        <span class="lb">承制费收入</span>
+        <div class="bar-wrap"><div class="bar base"></div></div>
+        <span class="val">¥192,000</span>
+      </div>
+      <div class="bar-row">
+        <span class="lb">＋剧链植入增收</span>
+        <div class="bar-wrap"><div class="bar plus" id="plusBar"></div></div>
+        <span class="val gold" id="plusVal">¥0</span>
+      </div>
+      <p class="sum" id="revSum">应用植入后：保底增收比例与 CPS 持续分佣实时显示</p>
+    </div>
+  </div>
+
+  <div class="kit">
+    <div class="pg-head"><span class="pg-logo">剧链</span><b>植入工具包</b></div>
+    <p class="pg-sub">已按剧本匹配 4 个植入位（品牌与报价来自剧链商家网络）。逐个应用，或一键全部应用。</p>
+
+    <div class="spot" data-clip="va" data-fee="20000">
+      <div class="spot-top"><img src="assets/p-sony.jpg" alt="">
+        <div class="si"><b>Sony WH-1000XM4 耳机</b><span>场次 3 · 人物佩戴</span></div>
+        <span class="fee">¥20,000</span></div>
+      <div class="st">保底 ＋ CPS 12% · 待应用</div>
+    </div>
+    <div class="spot" data-clip="va" data-fee="12000">
+      <div class="spot-top"><img src="assets/p-kanken.jpg" alt="">
+        <div class="si"><b>Kånken 双肩包 · 樱花粉</b><span>场次 3 · 人物随身</span></div>
+        <span class="fee">¥12,000</span></div>
+      <div class="st">保底 ＋ CPS 15% · 待应用</div>
+    </div>
+    <div class="spot" data-clip="vb" data-fee="52000">
+      <div class="spot-top"><img src="assets/p-dianping.jpg" alt="">
+        <div class="si"><b>大众点评 必吃榜 · 扇面广告位</b><span>场次 12 · 道具特写（竞价中标）</span></div>
+        <span class="fee">¥52,000</span></div>
+      <div class="st">竞价成交 ＋ CPS 8% · 待应用</div>
+    </div>
+    <div class="spot" data-clip="vc" data-fee="0">
+      <div class="spot-top"><img src="assets/p-dianping.jpg" alt="">
+        <div class="si"><b>茶馆场景冠名（随扇面打包）</b><span>场次 12 · 全景同步替换</span></div>
+        <span class="fee">打包</span></div>
+      <div class="st">随竞价打包 · 待应用</div>
+    </div>
+
+    <button class="apply-all" id="applyAll">✦ 一键应用全部植入</button>
+
+    <p class="note">应用后：植入版画面直接替换时间线素材，商品 ID 写入成片元数据；承制方分成按保底＋CPS 与剧方自动分账。</p>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  const pv=document.getElementById('pv'), pvTag=document.getElementById('pvTag');
+  const toast=document.getElementById('toast');
+  const placedSrc={va:'assets/va-placed.mp4',vb:'assets/vb-dianping.mp4',vc:'assets/vc-placed.mp4'};
+  const origSrc={va:'assets/va-original.mp4',vb:'assets/vb-original.mp4',vc:'assets/vc-original.mp4'};
+  let appliedAll=false, cur='va';
+
+  function showToast(t){
+    toast.textContent=t; toast.classList.add('show');
+    clearTimeout(toast._t); toast._t=setTimeout(()=>toast.classList.remove('show'),2600);
+  }
+
+  function setPreview(c){
+    cur=c;
+    pv.src=appliedAll?placedSrc[c]:origSrc[c]; pv.play().catch(()=>{});
+    const name=document.querySelector('.clip[data-c="'+c+'"]').dataset.name;
+    pvTag.textContent=name+(appliedAll?' · 已植入':' · 未植入');
+    pvTag.classList.toggle('ok',appliedAll);
+    document.querySelectorAll('.clip').forEach(k=>k.classList.toggle('cur',k.dataset.c===c));
+  }
+
+  document.querySelectorAll('.clip').forEach(k=>k.addEventListener('click',()=>setPreview(k.dataset.c)));
+
+  document.getElementById('applyAll').addEventListener('click',()=>{
+    if(appliedAll)return;
+    appliedAll=true;
+    // 时间线缩略图换成植入版
+    document.getElementById('th-va').src='assets/th-va-p.jpg';
+    document.getElementById('th-vb').src='assets/th-vb-p.jpg';
+    document.getElementById('th-vc').src='assets/th-vc-p.jpg';
+    document.querySelectorAll('.clip').forEach(k=>k.classList.add('applied'));
+    // 植入位状态
+    document.querySelectorAll('.spot').forEach(s=>{
+      s.classList.add('applied');
+      s.querySelector('.st').textContent='✓ 已应用 · 商品 ID 已写入成片';
+    });
+    // 预览切植入版
+    setPreview(cur);
+    // 收益动画
+    const target=84000; const t0=Date.now();
+    const bar=document.getElementById('plusBar'), val=document.getElementById('plusVal');
+    bar.style.width=(70*target/192000)+'%';
+    const timer=setInterval(()=>{
+      const p=Math.min(1,(Date.now()-t0)/1200);
+      val.textContent='¥'+Math.round(target*p).toLocaleString();
+      if(p>=1)clearInterval(timer);
+    },40);
+    document.getElementById('revSum').innerHTML='本集增收 <b>+44%</b>（¥84,000 保底）＋ CPS 持续分佣（成交后实时到账）';
+    const a=document.getElementById('applyAll');
+    a.textContent='✓ 已全部应用 · 4 个植入位生效'; a.classList.add('done');
+    showToast('植入完成：3 段素材已替换 · 商品追踪已开启');
+  });
+})();
+</script>
+</body>
+</html>
