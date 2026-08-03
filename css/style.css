@@ -278,6 +278,23 @@ mark em{font-size:10.5px;background:var(--gold);color:#0b0b10;border-radius:4px;
   font-family:"Songti SC","Noto Serif SC",serif;font-size:15px;color:var(--gold);
   letter-spacing:3px;text-align:center;}
 
+/* ————— 市场空间 ————— */
+.mkt{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;align-items:stretch;}
+.mcell{background:var(--panel);border:1px solid var(--line);border-top:1px solid var(--line-gold);
+  border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:6px;}
+.mcell.hl{background:linear-gradient(165deg,#221d16,var(--panel));border-color:var(--gold);
+  box-shadow:0 0 30px rgba(212,176,106,.12);}
+.mcell i{font-style:normal;font-size:11px;letter-spacing:2px;color:var(--gold);}
+.mcell b{font-family:Didot,Georgia,serif;font-size:36px;color:var(--gold-hi);line-height:1.15;font-weight:700;}
+.mcell b em{font-style:normal;font-size:17px;margin-left:2px;}
+.mcell span{font-size:12px;color:#cdcad4;line-height:1.7;}
+.mcell p{font-size:11.5px;color:var(--sub);line-height:1.75;margin-top:auto;padding-top:10px;
+  border-top:1px dashed var(--line);}
+.mcell p b.inb{font-family:inherit;font-size:inherit;color:var(--gold-hi);}
+#s-market .src{margin-top:18px;}
+@media (max-width:1000px){.mkt{grid-template-columns:repeat(2,1fr);}}
+@media (max-width:560px){.mkt{grid-template-columns:1fr;}}
+
 /* ————— 核心团队 ————— */
 .team{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:stretch;}
 .tcard{background:var(--panel);border:1px solid var(--line);border-top:1px solid var(--line-gold);
