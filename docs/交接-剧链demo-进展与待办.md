@@ -1,4 +1,6 @@
-# 交接：剧链 DramaLink 投资人 Demo（2026-07-23 更新）
+# 交接：Adborn 投资人 Demo（原"剧链 DramaLink"，2026-08-03 定名）
+
+> **定名记录**：2026-08-03 产品定名 **Adborn**（Ad+born，广告与内容一同出生），域名 adborn.ai 用户已购入（Namecheap，2 年）。备选产品线名"入画 FrameIn"（framein.ai 查询时未注册，用户未购）。下文历史记录中的"剧链 DramaLink"均为旧称。站内品牌文案已全局替换。
 
 ## 背景
 

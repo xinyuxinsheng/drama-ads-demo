@@ -1,6 +1,6 @@
-# 剧链 DramaLink · 投资人演示 Demo
+# Adborn · 投资人演示 Demo
 
-AI 时代的广告平台——从剧本到成交的完整链路演示。AI 短剧是 AI 生成内容中变现潜力最大的场景，也是第一站。
+Adborn（adborn.ai）：AI 时代的广告平台——广告与内容一同出生。AI 短剧是 AI 生成内容中变现潜力最大的场景，也是第一站。
 
 **线上地址**：https://xinyuxinsheng.github.io/drama-ads-demo/
 
